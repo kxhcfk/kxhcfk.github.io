@@ -1,6 +1,8 @@
 const game = () => {
     const canvas = document.getElementById('game'),
-          context = canvas.getContext('2d');
+        context = canvas.getContext('2d'),
+        mobileNav = document.querySelector('.snake__navigation'),
+        progress = document.querySelector('#count');
 
     let grid = 16,
         count = 0;
@@ -27,6 +29,7 @@ const game = () => {
         snake.x = 160;
         snake.y = 160;
         snake.cells = [];
+        progress.textContent = snake.cells.length;
         snake.maxCells = 4;
         snake.dx = grid;
         snake.dy = 0;
@@ -37,7 +40,6 @@ const game = () => {
     function loop() {
 
         requestAnimationFrame(loop);
-
 
         if (++count < 7) {
             return;
@@ -69,8 +71,10 @@ const game = () => {
             context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
             if (cell.x === apple.x && cell.y === apple.y) {
                 snake.maxCells++;
+                progress.textContent = snake.cells.length - 3;
                 apple.x = getRandomInt(0, 25) * grid;
                 apple.y = getRandomInt(0, 25) * grid;
+
             }
             for (var i = index + 1; i < snake.cells.length; i++) {
                 if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
@@ -85,21 +89,38 @@ const game = () => {
         if (e.code === 'ArrowLeft' && snake.dx === 0) {
             snake.dx = -grid;
             snake.dy = 0;
-        }
-        else if (e.code === 'ArrowUp' && snake.dy === 0) {
+        } else if (e.code === 'ArrowUp' && snake.dy === 0) {
             snake.dy = -grid;
             snake.dx = 0;
-        }
-        else if (e.code === 'ArrowRight' && snake.dx === 0) {
+        } else if (e.code === 'ArrowRight' && snake.dx === 0) {
             snake.dx = grid;
             snake.dy = 0;
-        }
-        else if (e.code === 'ArrowDown' && snake.dy === 0) {
+        } else if (e.code === 'ArrowDown' && snake.dy === 0) {
             snake.dy = grid;
             snake.dx = 0;
         }
 
     });
+
+    mobileNav.addEventListener('click', (e) => {
+        if ((e.target.classList.contains('snake__arrow-top') ||
+                e.target.closest('.snake__arrow-top')) && snake.dy === 0) {
+            snake.dy = -grid;
+            snake.dx = 0;
+        } else if ((e.target.classList.contains('snake__arrow-left') ||
+                e.target.closest('.snake__arrow-left')) && snake.dx === 0) {
+            snake.dx = -grid;
+            snake.dy = 0;
+        } else if ((e.target.classList.contains('snake__arrow-right') ||
+                e.target.closest('.snake__arrow-right')) && snake.dx === 0) {
+            snake.dx = grid;
+            snake.dy = 0;
+        } else if ((e.target.classList.contains('snake__arrow-down') ||
+                e.target.closest('.snake__arrow-down')) && snake.dy === 0) {
+            snake.dy = grid;
+            snake.dx = 0;
+        }
+    })
 
     requestAnimationFrame(loop);
 };

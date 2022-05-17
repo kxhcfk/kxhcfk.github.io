@@ -34,8 +34,25 @@
             <section class="section snake">
                 <div class="container">
                     <div class="snake__wrapper">
-                        <h1 class="snake__title">Snake</h1>
+                        <div class="snake__head">
+                            <h1 class="snake__title">Snake</h1>
+                            <span class="snake__progress">progress: <span class="snake__count" id="count">0</span></span>
+                        </div>
                         <canvas class="snake__board" id="game" width="400" height="400"></canvas>
+                        <div class="snake__navigation">
+                            <span class="snake__arrow snake__arrow-top">
+						<img src="/assets/img/arrow.svg" alt="">
+					</span>
+                            <span class="snake__arrow snake__arrow-left">
+						<img src="/assets/img/arrow.svg" alt="">
+					</span>
+                            <span class="snake__arrow snake__arrow-down">
+						<img src="/assets/img/arrow.svg" alt="">
+					</span>
+                            <span class="snake__arrow snake__arrow-right">
+						<img src="/assets/img/arrow.svg" alt="">
+					</span>
+                        </div>
                     </div>
                 </div>
             </section>
